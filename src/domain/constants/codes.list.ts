@@ -41,5 +41,13 @@ export const CodesList: Record<CodesEnum, { status: number; message: string }> =
     [CodesEnum.LOGIN_SERVER_ERROR]: {
       status: 500,
       message: "Error processing login",
+    },
+    [CodesEnum.GENERAL_SERVER_ERROR]: {
+      status: 500,
+      message: "Internal server error",
+    },
+    [CodesEnum.AUTH_UNAUTHORIZED]: {
+      status: 401,
+      message: "Unauthorized access",
     }
   };
