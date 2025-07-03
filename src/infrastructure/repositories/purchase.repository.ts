@@ -1,11 +1,22 @@
 import { PurchaseRepository } from "@/domain/repositories/purchase.repository";
-import { Purchase } from "@prisma/client";
+import { PrismaClient, Purchase } from "@prisma/client";
 
 export class PurchaseRepositoryImp implements PurchaseRepository {
+    private prisma = new PrismaClient();
+
     create(customerId: string): Promise<Purchase> {
-        throw new Error("Method not implemented.");
+        return this.prisma.purchase.create({
+            data: {
+                customerId,
+            }
+        });
     }
+
     getLast(customerId: string): Promise<Purchase | null> {
-        throw new Error("Method not implemented.");
+        return this.prisma.purchase.findFirst({
+            where: { customerId },
+            orderBy: { purchasedAt: 'desc' },
+            take: 1
+        });
     }
 }

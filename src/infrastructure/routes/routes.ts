@@ -1,8 +1,10 @@
-import { FastifyInstance } from "fastify";
-import { LoginController } from "../controllers/login.controller";
 import { Logger } from "@/core/utils/logger.util";
-import { CreateCustomerController } from "../controllers/create-customer.controller";
+import { FastifyInstance } from "fastify";
 import { BuyCornController } from "../controllers/buy-corn.controller";
+import { CreateCustomerController } from "../controllers/create-customer.controller";
+import { LoginController } from "../controllers/login.controller";
+import { createCustomerSchema } from "../schemas/create-customer.schema";
+import { loginSchema } from "../schemas/login.schema";
 
 const routes = async (app: FastifyInstance) => {
     const logger = new Logger('routes');
@@ -14,6 +16,9 @@ const routes = async (app: FastifyInstance) => {
 
     app.post(
         '/auth/login',
+        {
+            schema: loginSchema
+        },
         loginController.handle.bind(loginController)
     );
 
@@ -24,6 +29,9 @@ const routes = async (app: FastifyInstance) => {
 
     app.post(
         '/customers',
+        {
+            schema: createCustomerSchema
+        },
         createCustomerController.handle.bind(createCustomerController)
     );
 
@@ -32,7 +40,7 @@ const routes = async (app: FastifyInstance) => {
     /* Buy Corn */
     const buyCornController = new BuyCornController(app.useCases.buyCorn);
 
-    app.post(
+    app.get(
         '/purchases/corn',
         {
             preHandler: app.plugins.auth.authenticate.bind(app.plugins.auth)
@@ -40,7 +48,7 @@ const routes = async (app: FastifyInstance) => {
         buyCornController.handle.bind(buyCornController)
     );
 
-    logger.info('POST /api/v1/purchases/corn route registered successfully.');
+    logger.info('GET /api/v1/purchases/corn route registered successfully.');
 }
 
 export default routes;

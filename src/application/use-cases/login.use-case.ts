@@ -41,7 +41,7 @@ export class LoginUseCase {
             const { passwordHash, ...customerData } = customer;
 
             const tokenPayload = {
-                customerId: customer.id,
+                id: customer.id,
                 email: customer.email,
                 name: customer.name
             };

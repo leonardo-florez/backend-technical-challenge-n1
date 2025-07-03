@@ -14,6 +14,14 @@ export class BuyCornUseCase {
 
     async execute(customerId: string) {
         try {
+            if (!customerId) {
+                throw Responser.error({
+                    code: CodesEnum.BUY_CORN_INVALID_CUSTOMER_ID,
+                    status: CodesList[CodesEnum.BUY_CORN_INVALID_CUSTOMER_ID].status,
+                    message: CodesList[CodesEnum.BUY_CORN_INVALID_CUSTOMER_ID].message,
+                });
+            }
+
             const customer = await this.customerRepository.findById(customerId);
             if (!customer) {
                 throw Responser.error({

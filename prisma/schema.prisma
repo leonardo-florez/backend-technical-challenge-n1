@@ -24,7 +24,7 @@ model Customer {
 
 model Purchase {
   id          String   @id @default(uuid())
-  customerId  String   @map("customerId")
+  customerId  String
   purchasedAt DateTime @default(now())
 
   customer Customer @relation(fields: [customerId], references: [id])

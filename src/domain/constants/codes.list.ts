@@ -49,5 +49,9 @@ export const CodesList: Record<CodesEnum, { status: number; message: string }> =
     [CodesEnum.AUTH_UNAUTHORIZED]: {
       status: 401,
       message: "Unauthorized access",
+    },
+    [CodesEnum.BUY_CORN_INVALID_CUSTOMER_ID]: {
+      status: 400,
+      message: "Invalid customer ID",
     }
   };

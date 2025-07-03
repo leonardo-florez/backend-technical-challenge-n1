@@ -1,21 +1,31 @@
 import fastify from "fastify";
-import { CodesList } from "./domain/constants/codes.list";
+import { Logger } from "./core/utils/logger.util";
 import { CodesEnum } from "./domain/constants/codes.enum";
+import { CodesList } from "./domain/constants/codes.list";
+import { registerModule } from "./infrastructure/module";
 import { JsonWebTokenService } from "./infrastructure/services/json-web-token.service";
 import { Md5EncryptionService } from "./infrastructure/services/md5-encryption.service";
-import { registerModule } from "./infrastructure/module";
 
 export const buildServer = async () => {
+    const logger = new Logger('Server');
     const app = fastify();
 
     app.setErrorHandler((error: any, request, reply) => {
-        const status = error.status || CodesList[CodesEnum.GENERAL_SERVER_ERROR].status;
-        reply.status(status).send({
+        logger.error(`Error occurred: ${error.message}`, error);
+
+        const status = error.status || error.statusCode || CodesList[CodesEnum.GENERAL_SERVER_ERROR].status;
+
+        const response: any = {
             status: status,
             code: error.code || CodesEnum.GENERAL_SERVER_ERROR,
             message: error.message || CodesList[CodesEnum.GENERAL_SERVER_ERROR].message,
-            error: error.error || error,
-        });
+        }
+
+        if (error.error) {
+            response['error'] = error.error;
+        }
+
+        reply.status(status).send(response);
     });
 
     const jwtService = new JsonWebTokenService();
