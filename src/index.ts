@@ -6,7 +6,7 @@ const bootstrap = async () => {
     const logger = new Logger('Bootstrap');
     logger.info('Starting application...');
     const app = await buildServer();
-    await app.listen({ port: Envs.port });
+    await app.listen({ port: Envs.port, host: '0.0.0.0' });
     logger.info(`Application started successfully on port ${Envs.port}`);
 }
 

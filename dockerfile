@@ -14,5 +14,8 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
+# Install Prisma CLI globally
+EXPOSE 3000
+
 # Start the application
-CMD ["sh", "-c", "npx prisma generate && npm run start:dev"]
+CMD ["sh", "-c", "npx prisma generate && npm run dev"]
