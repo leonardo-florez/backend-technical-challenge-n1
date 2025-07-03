@@ -7,7 +7,7 @@ import { createCustomerSchema } from "../schemas/create-customer.schema";
 import { loginSchema } from "../schemas/login.schema";
 
 const routes = async (app: FastifyInstance) => {
-    const logger = new Logger('routes');
+    const logger = new Logger('Routes');
 
     logger.info('Registering /api/v1 routes...');
 

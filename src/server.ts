@@ -8,6 +8,9 @@ import { Md5EncryptionService } from "./infrastructure/services/md5-encryption.s
 
 export const buildServer = async () => {
     const logger = new Logger('Server');
+
+    logger.info('Starting server...');
+
     const app = fastify();
 
     app.setErrorHandler((error: any, request, reply) => {
@@ -32,6 +35,8 @@ export const buildServer = async () => {
     const encryptionService = new Md5EncryptionService();
 
     await registerModule(app, jwtService, encryptionService);
+
+    logger.info('Server started successfully.');
 
     return app;
 };
