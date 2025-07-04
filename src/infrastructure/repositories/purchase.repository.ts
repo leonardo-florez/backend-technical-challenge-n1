@@ -19,4 +19,11 @@ export class PurchaseRepositoryImp implements PurchaseRepository {
             take: 1
         });
     }
+
+    findByCustomerId(customerId: string): Promise<Purchase[]> {
+        return this.prisma.purchase.findMany({
+            where: { customerId },
+            orderBy: { purchasedAt: 'desc' }
+        });
+    }
 }

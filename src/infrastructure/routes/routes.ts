@@ -2,6 +2,7 @@ import { Logger } from "@/core/utils/logger.util";
 import { FastifyInstance } from "fastify";
 import { BuyCornController } from "../controllers/buy-corn.controller";
 import { CreateCustomerController } from "../controllers/create-customer.controller";
+import { GetPurchasesController } from "../controllers/get-purchases.controller";
 import { LoginController } from "../controllers/login.controller";
 import { createCustomerSchema } from "../schemas/create-customer.schema";
 import { loginSchema } from "../schemas/login.schema";
@@ -40,12 +41,25 @@ const routes = async (app: FastifyInstance) => {
     /* Buy Corn */
     const buyCornController = new BuyCornController(app.useCases.buyCorn);
 
-    app.get(
+    app.post(
         '/purchases/corn',
         {
             preHandler: app.plugins.auth.authenticate.bind(app.plugins.auth)
         },
         buyCornController.handle.bind(buyCornController)
+    );
+
+    logger.info('POST /api/v1/purchases/corn route registered successfully.');
+
+    /* Get Purchases */
+    const getPurchasesController = new GetPurchasesController(app.useCases.getPurchases);
+
+    app.get(
+        '/purchases/corn',
+        {
+            preHandler: app.plugins.auth.authenticate.bind(app.plugins.auth)
+        },
+        getPurchasesController.handle.bind(getPurchasesController)
     );
 
     logger.info('GET /api/v1/purchases/corn route registered successfully.');

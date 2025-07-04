@@ -1,4 +1,5 @@
 import fastify from "fastify";
+import cors from '@fastify/cors'
 import { Logger } from "./core/utils/logger.util";
 import { CodesEnum } from "./domain/constants/codes.enum";
 import { CodesList } from "./domain/constants/codes.list";
@@ -12,6 +13,13 @@ export const buildServer = async () => {
     logger.info('Starting server...');
 
     const app = fastify();
+
+    await app.register(cors, {
+        origin: true,
+        credentials: true,
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+        allowedHeaders: ['*']
+    });
 
     app.setErrorHandler((error: any, request, reply) => {
         logger.error(`Error occurred: ${error.message}`, error);

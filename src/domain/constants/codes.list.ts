@@ -18,6 +18,18 @@ export const CodesList: Record<CodesEnum, { status: number; message: string }> =
       status: 429,
       message: "Too many requests",
     },
+    [CodesEnum.GET_PURCHASES_SUCCESS]: {
+      status: 200,
+      message: "Purchases retrieved successfully",
+    },
+    [CodesEnum.GET_PURCHASES_NOT_FOUND_CUSTOMER]: {
+      status: 404,
+      message: "Customer not found",
+    },
+    [CodesEnum.GET_PURCHASES_SERVER_ERROR]: {
+      status: 500,
+      message: "Error retrieving purchases",
+    },
     [CodesEnum.CREATE_CUSTOMER_SUCCESS]: {
       status: 201,
       message: "Customer created successfully",

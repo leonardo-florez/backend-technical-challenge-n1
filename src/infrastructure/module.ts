@@ -1,5 +1,6 @@
 import { BuyCornUseCase } from "@/application/use-cases/buy-corn.use-case";
 import { CreateCustomerUseCase } from "@/application/use-cases/create-customer.use-case";
+import { GetPurchasesUseCase } from "@/application/use-cases/get-purchases.use-case";
 import { LoginUseCase } from "@/application/use-cases/login.use-case";
 import { EncryptionService } from "@/domain/services/encryption.service";
 import { JwtService } from "@/domain/services/jwt.service";
@@ -17,7 +18,8 @@ export const registerModule = async (app: FastifyInstance, jwtService: JwtServic
     const useCases: UseCases = {
         createCustomer: new CreateCustomerUseCase(customerRepository, encryptionService),
         login: new LoginUseCase(customerRepository, encryptionService, jwtService),
-        buyCorn: new BuyCornUseCase(customerRepository, purchaseRepository)
+        buyCorn: new BuyCornUseCase(customerRepository, purchaseRepository),
+        getPurchases: new GetPurchasesUseCase(customerRepository, purchaseRepository)
     };
 
     const plugins: Plugins = {
